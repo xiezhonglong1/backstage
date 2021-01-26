@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="loge">
+        <b>操作</b>
+        <ul>
+            <li>1.点击输入框输入规范数字，失去焦点后实现历史载入并本地储存（Enter去焦）</li>
+            <li>2.点击‘占扑’产生数码，三次后出和</li>
+            <li>3.点击‘和’实现刷新重扑,以及推测下一个数的‘属性’</li>
+            <li>4.鼠标移入底部栏框可查看历史数据，点击可实施多数据载入及修改</li>
+            <li>5.点击‘推测’实现逻辑展示预测数据及与真实数据对比的结果</li>
+            <li>6.点击右上角栏框选择主题</li>
+        </ul>
+    </div>
+    <div id="app">
+        <gzj></gzj>
+    </div>
+
+    <script src="./lib/jquery-3.4.1.js"></script>
+    <script src="./js/bodykeyele.js"></script>
+    <script src="./js/trifles.js"></script>
+    <script src="./lib/vue-3.0.js"></script>
+    <script>
+        //搜索组件
+        let Sreachzj = {
+            props: ['infer'],
+            methods: {
+                //传递实时数据
+                names(e) {
+                    let Z = Math.abs(Math.floor(e.target.value))
+
+                    let ds = ''
+                    let dx = ''
+                    ds = +(Z) % 2 == 0 ? '双' : '单'
+                    dx = +(Z) >= 14 ? '大' : '小'
+
+                    if (Z >= 0 && Z <= 27) {
+                        this.$emit('name', {
+                            id: new Date().valueOf(),
+                            name: Z,
+                            DS: ds,
+                            DX: dx
+                        })
+                    }
+                    else {
+                        alert('你怕是走错了赌场哦——（0~27）呀！！')
+                    }
+                    e.target.value = ''
+                },
+                onkey(e) {
+                    // console.log(e.keyCode);
+                    if (e.keyCode == 13) {
+                        this.names(e)
+                    }
+                }
+            },
+            template: `
+            <!-- 头部搜索 -->
+            <div class="sreachBox">
+              <input type="number" min='0' max='27' placeholder="录用数据" class="sreach" @keyup='onkey' @blur='names($event)'>
+            </div>
+            <div class='infer'>
+              <span>{{infer.inferDX}}</span>
+              <span>{{infer.inferDS}}</span>
+            </div>
+            <div class="subject">
+              <a href="javascript:void(0)" class="subject_a1">激情之上</a><br>
+              <a href="javascript:void(0)" class="subject_a2">似梦似雪</a>
+            </div>
+            `
+        }
+        //中部输出组件
+        let Contenzj = {
+            props: ['listRdsun', 'rdMild'],
+            methods: {
+                //随机输出
+                Occupy() {
+                    let sum = Math.floor(Math.random() * 10)
+                    this.$emit('rdsums', { sum: sum })
+
+                },
+                //刷新随机器
+                repeat() {
+                    this.$emit('repeat')
+                },
+                //推算
+                reckon() {
+                    this.$emit('reckon')
+                }
+            },
+            template: `
+            <!-- 中部数据黑洞 -->
+            <div class="centerBox">
+                <div class="centerBox_sums">
+                    <ol class='olNoon'>
+                        <li>孩</li>
+                        <li>纸</li>
+                        <li>呀</li>
+                    </ol>
+                    <ul class=ulBlock>
+                        <li v-for='(item,index) in listRdsun' :key='index'>{{item}}</li>
+                    </ul>
+                </div>
+                <div class="centerBox_objct">
+                    <div class="centerBox_objctOut">占<a href="" class='zhanPu' @click.prevent='Occupy'><img src="" alt=""></a>扑</div>
+                    <div class="centerBox_objctCenter" @click='repeat'><input disabled='true' v-model='rdMild'></div>
+                    <div class="centerBox_objctOut" @click.prevent='reckon'>推<a href=""><img src="" alt=""></a>测</div>
+                </div>
+            </div>
+            `
+        }
+        //底部数据显示组件
+        let Bottomzj = {
+            props: ['list', 'sixlist', 'reckonVle'],
+            methods: {
+                //获取历史数据并传递
+                hoverList(e) {
+                    let lists = e.target.value.split(' ')
+                    // console.log(lists);
+                    let newobj = []
+                    let ds = ''
+                    let dx = ''
+                    lists.forEach(item => {
+                        ds = +(item) % 2 == 0 ? '双' : '单'
+                        dx = +(item) >= 14 ? '大' : '小'
+                        newobj.push({
+                            id: new Date().valueOf(),
+                            name: item,
+                            DS: ds,
+                            DX: dx
+                        })
+                    })
+                    this.$emit('hoverist', newobj)
+                }
+
+            },
+            computed: {
+                //赋值历史数据
+                inputList() {
+                    let obj = ''
+                    this.list.forEach(item => {
+                        obj += item.name + ' '
+                    })
+                    return obj
+                }
+            },
+            template: `
+            <!-- 底部数据显应 -->
+            <div class="bottom">
+                <span>历史数据:^v^<a href="">{{list.length}}</a><b>实时更新前{{sixlist.length}}</b>个</span>
+                <input type="text" class='ss' :value='inputList' @blur='hoverList($event)'>
+                <ul>
+                    <li v-for='(item,index) in sixlist' :key='item.id'>{{item.name}}</li>
+                </ul>
+            </div>
+            <div class="bottom_jblist">
+                <ul>
+                    <li v-for='(item,index) in list' :key='item.id'>
+                        {{item.name}}
+                        <div>
+                            <span>大小:<i>{{item.DX}}</i></span>
+                            <span>单双:<i>{{item.DS}}</i></span>
+                        </div>
+                     </li>
+                </ul>
+            </div>
+            <div class="bottom_reckon">
+                <ul>
+                    <li v-for='(item,index) in reckonVle' :key='index'>{{item.divinDX}}<i :class='item.zwDX=="对"?"trueZ":"falseZ"'>{{item.zwDX}}</i></li>
+                </ul><br>
+                <ul>
+                    <li v-for='(item,index) in reckonVle' :key='index'>{{item.divinDS}}<i :class='item.zwDS=="对"?"trueZ":"falseZ"'>{{item.zwDS}}</i></li>
+                </ul>     
+            </div>
+            `
+        }
+
+        let mv = Vue.createApp({})
+
+        mv.component('gzj', {
+            data() {
+                return {
+                    lists: '',
+                    six: '',
+                    listRdsun: [],
+                    rdMild: '龙',
+                    reckons: [],
+                    inferNum: 0
+                }
+            },
+            created() {
+                this.lists = JSON.parse(localStorage.getItem('lists') || '[]')
+                this.six = this.lists.slice(-6)
+                console.log(this.lists);
+
+            },
+            methods: {
+                //添加实时数据
+                addname(e) {
+                    if (e.name != '') {
+                        this.lists.push({
+                            id: e.id,
+                            name: e.name,
+                            DX: e.DX,
+                            DS: e.DS
+                        })
+                        // localStorage.setItem('lists', JSON.stringify(this.lists))
+                    }
+                    // else {
+                    //     alert('请输入实时数据(Z+)')
+                    // }
+                    this.six = this.lists.slice(-6)
+
+                },
+                //直接修改历史数据
+                eidlist(e) {
+                    let index = e.findIndex(item => item.name == '')
+                    e.splice(index, 1)
+                    this.lists = e
+                    this.six = this.lists.slice(-6)
+                },
+                //添加随机数据
+                addSum(e) {
+                    if (this.listRdsun.length < 3) {
+                        this.listRdsun.push(e.sum)
+                    }
+                    if (this.listRdsun.length == 3) {
+                        let mild = 0
+                        this.listRdsun.forEach(element => {
+                            this.rdMild = mild += +(element)
+                            this.rdMild = this.rdMild < 10 ? '0' + this.rdMild : this.rdMild
+                        });
+                    }
+                    // console.log(this.listRdsun, this.listRdsun.length);
+                },
+                //刷新占扑
+                removSum() {
+                    this.listRdsun = []
+                    this.rdMild = '和'
+
+                    let arr = this.lists
+                    let unknownDx = ''
+                    let unknownDs = ''
+                    if (arr.length < 6) return
+                    let five = arr[arr.length - 5].DX
+                    let fiveS = arr[arr.length - 5].DS
+                    // let fiveN = arr[arr.length - 5].name
+                    let thre = arr[arr.length - 4].DX
+                    let threS = arr[arr.length - 4].DS
+                    let one = arr[arr.length - 1].DX
+                    let oneS = arr[arr.length - 1].DS
+
+                    if (five == one) {
+                        unknownDx = thre == '大' ? '大' : '小'
+                    }
+                    if (five != one) {
+                        unknownDx = thre == '大' ? '小' : '大'
+                    }
+                    if (fiveS == oneS) {
+                        unknownDs = threS == '双' ? '双' : '单'
+                    }
+                    if (fiveS != oneS) {
+                        unknownDs = threS == '双' ? '单' : '双'
+                    }
+                    this.inferNum = {
+                        inferDX: unknownDx,
+                        inferDS: unknownDs
+                    }
+                    // console.log(five, fiveS, fiveN);
+                },
+                //推算
+                Reckon() {
+                    this.reckons = []
+                    let arr = this.lists
+                    let unknownDx = ''
+                    let unknownDs = ''
+                    let trFa = ''
+                    let trFas = ''
+                    /*
+                    核心:已知三个数推测第4个数
+                    位置关系：推测数4索引最小，已知数1索引最大，已知数2索引比数1少一个位，已知数3索引比数1索引少4个位，未知数4索引比数3索引少1个位
+                    推测逻辑：以比较1和3的数字特性（大小单双）根据数子2推测未知数4
+                   */
+                    // console.log(arr);
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr.length - i < 6) {
+                            return
+                        }
+                        let fivele = arr[i].DX
+                        let fiveles = arr[i].DS
+                        // let fiveleN = arr[i].name
+                        let threle = arr[(i + 1)].DX
+                        let threles = arr[(i + 1)].DS
+                        let zerole = arr[(i + 4)].DX
+                        let zeroles = arr[(i + 4)].DS
+                        let wzhsun = arr[(i + 5)].DX
+                        let wzhsuns = arr[(i + 5)].DS
+                        // console.log(fivele, fiveles, fiveleN);
+                        if (fivele == zerole) {
+                            unknownDx = threle == '大' ? '大' : '小'
+                            trFa = unknownDx == wzhsun ? '对' : '错'
+                        }
+                        if (fivele != zerole) {
+                            unknownDx = threle == '大' ? '小' : '大'
+                            trFa = unknownDx == wzhsun ? '对' : '错'
+                        }
+                        if (fiveles == zeroles) {
+                            unknownDs = threles == '双' ? '双' : '单'
+                            trFas = unknownDs == wzhsuns ? '对' : '错'
+                        }
+                        if (fiveles != zeroles) {
+                            unknownDs = threles == '双' ? '单' : '双'
+                            trFas = unknownDs == wzhsuns ? '对' : '错'
+                        }
+
+                        this.reckons.push({
+                            divinDX: unknownDx,
+                            divinDS: unknownDs,
+                            zwDX: trFa,
+                            zwDS: trFas
+
+                        })
+                        // console.log(this.reckons);
+                    }
+                }
+
+            },
+            template: `
+            <div class="outBox">
+                <sreachzj @name='addname' :infer='inferNum'></sreachzj>
+                <contenzj @rdsums='addSum' :listRdsun='listRdsun' :rdMild='rdMild' @repeat='removSum' @reckon='Reckon'></contenzj>
+                <bottomzj :list='lists' :sixlist='six' :reckonVle='reckons' @hoverist='eidlist'></bottomzj>
+            </div>
+            `,
+            components: {
+                'sreachzj': Sreachzj,
+                'contenzj': Contenzj,
+                'bottomzj': Bottomzj
+            },
+            updated() {
+                localStorage.setItem('lists', JSON.stringify(this.lists))
+            }
+        })
+
+        mv.mount('#app')
+    </script>
+</body>
+
+</html>
