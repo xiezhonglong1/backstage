@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            position: relative;
+            width: 1000px;
+            height: 1000px;
+            border-radius: 50%;
+            background-image: radial-gradient(50% 50% at 50% 50%, rgba(255, 0, 0, 0.9), rgba(255, 0, 0, 0), rgba(217, 255, 0, 1), rgba(217, 255, 0, 0), rgba(29, 90, 148, 0), rgba(29, 90, 148, 1));
+        }
+
+        .wai {
+            position: absolute;
+            top: 483px;
+            left: 806px;
+            /* background-color: red; */
+            transform-origin: 100px 0px;
+            animation: wai 10s infinite linear;
+        }
+
+        .wai:hover {
+            transition: all 1s;
+            top: 250px;
+            left: 900px;
+            animation: none
+        }
+
+        @keyframes wai {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .nei {
+            position: relative;
+            top: -10px;
+            left: -200px;
+            width: 400px;
+            height: 400px;
+            margin: 150px auto;
+            transform-style: preserve-3d;
+            /* background-color: antiquewhite; */
+            transform: rotateX(45deg) rotateY(0deg) rotateZ(45deg);
+            animation: uoter 8s infinite linear;
+        }
+
+        .nei:hover {
+            animation: uoter paused;
+        }
+
+        @keyframes uoter {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+
+        span {
+            position: absolute;
+            top: calc((400px / 2) - (250px / 2));
+            left: calc((400px / 2) - (250px / 2));
+            width: 250px;
+            height: 250px;
+            font-size: 100px;
+            line-height: 250px;
+            text-align: center;
+            border-radius: 20px;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
+            border: 4px solid #65d9fe;
+        }
+
+        span img {
+            width: 250px;
+            height: 250px;
+        }
+
+        .nei span:nth-child(1) {
+            background-color: rgba(16, 181, 223, 0.7);
+            animation: span1 1s infinite linear alternate;
+        }
+
+        @keyframes span1 {
+            0% {
+                transform: translate3d(0px, 0px, 0px);
+            }
+
+            100% {
+                transform: translate3d(0px, 0px, -139px);
+            }
+        }
+
+        .nei span:nth-child(2) {
+            background-color: rgba(10, 52, 238, 0.7);
+            transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translate3d(-129px, 0px, -129px);
+            animation: span2 1s infinite linear alternate;
+        }
+
+        @keyframes span2 {
+            0% {
+                transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translate3d(-129px, 0px, -129px);
+            }
+
+            100% {
+                transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translate3d(-129px, 0px, -268px);
+            }
+        }
+
+        .nei span:nth-child(3) {
+            background-color: rgba(82, 238, 10, 0.7);
+            transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 129px, -129px);
+            animation: span3 1s infinite linear alternate;
+        }
+
+        @keyframes span3 {
+            0% {
+                transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 129px, -129px);
+            }
+
+            100% {
+                transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 129px, -268px);
+            }
+        }
+
+        .nei span:nth-child(4) {
+            background-color: rgba(244, 248, 6, 0.7);
+            transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 129px, 129px);
+            animation: span4 1s infinite linear alternate;
+        }
+
+        @keyframes span4 {
+            0% {
+                transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 129px, 129px);
+            }
+
+            100% {
+                transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 129px, 286px);
+            }
+        }
+
+        .nei span:nth-child(5) {
+            background-color: rgba(250, 7, 68, 0.7);
+            /* transform: translateY(100px); */
+            transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translate3d(-129px, 0px, 129px);
+            animation: span5 1s infinite linear alternate;
+        }
+
+        @keyframes span5 {
+            0% {
+                transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translate3d(-129px, 0px, 129px);
+            }
+
+            100% {
+                transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translate3d(-129px, 0px, 286px);
+            }
+        }
+
+        .nei span:nth-child(6) {
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 0px, 259px);
+            background-color: rgba(238, 10, 188, 0.7);
+            animation: span6 1s infinite linear alternate;
+        }
+
+        @keyframes span6 {
+            0% {
+                transform: translate3d(0px, 0px, 259px);
+            }
+
+            100% {
+                transform: translate3d(0px, 0px, 400px);
+            }
+        }
+
+        small {
+            position: absolute;
+            top: calc((400px / 2) - (100px / 2));
+            left: calc((400px / 2) - (100px / 2));
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            border: 4px solid red;
+            transform: translate3d(0px, 0px, 75px);
+        }
+
+        small img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .nei small:nth-last-child(1) {
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 0px, 180px);
+            background-color: rgba(238, 10, 188, 0);
+        }
+
+        .nei small:nth-last-child(2) {
+            transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 128px, -54px);
+            background-color: rgba(10, 238, 48, 0.7);
+        }
+
+        .nei small:nth-last-child(3) {
+            transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translate3d(-128px, 0px, -50px);
+            background-color: rgba(10, 44, 238, 0.7);
+        }
+
+        .nei small:nth-last-child(4) {
+            transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translate3d(-128px, 0px, 50px);
+            background-color: rgba(238, 10, 59, 0.7);
+        }
+
+        .nei small:nth-last-child(5) {
+            transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 128px, 54px);
+            background-color: rgba(223, 238, 10, 0.7);
+        }
+
+        .nei small:nth-last-child(6) {
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate3d(0px, 0px, 75px);
+            background-color: rgba(10, 173, 238, 0.7);
+        }
+
+        small {
+            position: absolute;
+            top: calc((400px / 2) - (100px / 2));
+            left: calc((400px / 2) - (100px / 2));
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            border: 4px solid red;
+            transform: translate3d(0px, 0px, 75px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wai">
+        <div class="nei">
+            <span><img src="./img/81cca65fe954a02a06c19ed2cf351e5.jpg" alt=""></span>
+            <span><img src="./img/afgafva.png" alt=""></span>
+            <span><img src="./img/f85271812c651d05b6b56b85240d28ba2a64ffaa59412-DCO9xn_fw658.jpg" alt=""></span>
+            <span><img src="./img/她变了~真的.jpg" alt=""></span>
+            <span><img src="./img/微信图片_20191030185649.jpg" alt=""></span>
+            <span><img src="./img/微信图片_20191030185722.jpg" alt=""></span>
+            <small><img src="./img/zhkun.png" alt=""></small>
+            <small><img src="./img/zhkun.png" alt=""></small>
+            <small><img src="./img/zhkun.png" alt=""></small>
+            <small><img src="./img/zhkun.png" alt=""></small>
+            <small><img src="./img/zhkun.png" alt=""></small>
+            <small><img src="./img/zhkun.png" alt=""></small>
+        </div>
+    </div>
+</body>
+
+</html>
